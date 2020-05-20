@@ -9,7 +9,24 @@
 import UIKit
 
 class DocumentsTableViewController: UITableViewController {
-
+    
+    private let presenter: DocumentsPresenter!
+    private var documents = [Any]()
+    
+    init(with presenter: DocumentsPresenter) {
+        self.presenter = presenter
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        // TODO: this can be set as parameter
+        presenter.fetchDocuments()
+        presenter.fetchDelegate = self
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,29 +35,37 @@ class DocumentsTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        
+        // TODO: this needs to be return by presenter
+        return documents.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = UITableViewCell(style: .default, reuseIdentifier: "DocumentCell")
 
         // Configure the cell...
+        // TODO: this needs to be return by presenter
+        if let document = documents[indexPath.row] as? Document {
+            cell.textLabel?.text = document.name
+        }
+        
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -87,4 +112,14 @@ class DocumentsTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension DocumentsTableViewController: FetchDocumentDelegate {
+    
+    func documentsDidFetch(_ documents: [Any]) {
+        self.documents = documents
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
+    }
 }

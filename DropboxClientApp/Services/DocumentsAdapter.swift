@@ -7,17 +7,27 @@
 //
 
 import Foundation
+import SwiftyDropbox
 
 class DocumentsAdapter {
     
-    let services = ServicesWebAPI()
+    private let api = ServicesWebAPI()
     
-    func documents() -> [Any] {
-        
-        services.documentList {_ in
-            print("called")
+    func fetchDocuments(_ completion: @escaping ([Document]?)->Void)  {
+        api.documentList { response in
+            //guard let response = response else { return }
+            let documents = self.metadataToDocuments(response.entries)
+            completion(documents)
+        }
+    }
+    
+    private func metadataToDocuments(_ metadata: [SwiftyDropbox.Files.Metadata]) -> [Document] {
+        var documents = [Document]()
+        for element in metadata {
+            let document = Document(name: element.name, path: element.pathDisplay ?? "")
+            documents.append(document)
         }
         
-        return []
+        return documents
     }
 }

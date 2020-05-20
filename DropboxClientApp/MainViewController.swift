@@ -7,34 +7,64 @@
 //
 
 import UIKit
+import SwiftyDropbox
 
 class MainViewController: UIViewController {
+    
+    private let sharedApplication = UIApplication.shared
+    private var isLogged = false
 
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = UIColor.white
         setUp()
         print("Main")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if isUserAuthenticated() {
-            // show navigation
+            // TODO: show navigation
         } else {
-            let loginViewController = LoginViewController()
-            self.present(loginViewController, animated: true, completion: nil)
+            callAuthorizationController()
         }
     }
     
+    // MARK: - Configuration
+    
     private func setUp() {
-        view.backgroundColor = UIColor.white
+        if let appDelegate = sharedApplication.delegate as? AppDelegate {
+            appDelegate.autenticationDelegate = self
+        }
     }
 
+    // MARK: - Autentication handling
+    
     private func isUserAuthenticated() -> Bool {
-        return false
+        return isLogged
     }
     
+    private func callAuthorizationController() {
+        DropboxClientsManager.authorizeFromController(sharedApplication, controller: self, openURL: {
+            (url: URL) -> Void in
+            self.sharedApplication.open(url)
+        })
+    }
+}
+ 
+// MARK: - AuthenticationDelagete
+
+extension MainViewController: AuthenticationDelagete {
+    func didLoginSuccesfully(_ success: Bool) {
+        isLogged = success
+        if success {
+            let navigation = NavigationViewController()
+            present(navigation, animated: true, completion: nil)
+        } else {
+            // TODO:
+        }
+    }
 }
 

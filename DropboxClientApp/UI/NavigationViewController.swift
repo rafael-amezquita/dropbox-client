@@ -10,17 +10,13 @@ import UIKit
 
 class NavigationViewController: UINavigationController {
 
-    override init(rootViewController: UIViewController = DocumentsTableViewController()) {
-        super.init(rootViewController: rootViewController)
+    init() {
+        let presenter = DocumentsPresenter()
+        let documentsTableController = DocumentsTableViewController(with: presenter)
+        super.init(rootViewController: documentsTableController)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-    }
-
 }

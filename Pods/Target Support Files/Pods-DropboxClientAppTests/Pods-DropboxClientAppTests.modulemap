@@ -1,0 +1,6 @@
+framework module Pods_DropboxClientAppTests {
+  umbrella header "Pods-DropboxClientAppTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
