@@ -7,12 +7,12 @@
 //
 
 import Foundation
-import SwiftyDropbox
 
 class DocumentsAdapter {
     
-    private let api = ServicesWebAPI()
-    typealias Metadata = SwiftyDropbox.Files.Metadata
+    private let api = WebAPIFactory.serviceAPI()
+    
+    // MARK: - Fetching
     
     func fetchDocuments(withPath path: String?,
                         completion: @escaping ([Document]?)->Void)  {
@@ -23,15 +23,37 @@ class DocumentsAdapter {
         }
     }
     
+    // MARK: - Mapping
+    
     private func metadataToDocuments(_ metadata: [Metadata]) -> [Document] {
         var documents = [Document]()
         for element in metadata {
-            let document = Document(type: .folder,
+        
+            let type = mapDocumentType(from: element)
+            let document = Document(type: type,
                                     name: element.name,
                                     path: element.pathDisplay ?? "")
             documents.append(document)
         }
         
         return documents
+    }
+    
+    private func mapDocumentType(from element: Metadata) -> DocumentType {
+        var documentType: DocumentType = .folder
+        // TODO: getThumbnail and update the model with that info
+        switch element {
+            case let fileMetadata as FileMetadata:
+                documentType = .file
+                print(fileMetadata)
+            case let folderMetadata as FolderMetadata:
+                documentType = .folder
+                print(folderMetadata)
+            default:
+                documentType = .unknown
+                print(element)
+        }
+        
+        return documentType
     }
 }

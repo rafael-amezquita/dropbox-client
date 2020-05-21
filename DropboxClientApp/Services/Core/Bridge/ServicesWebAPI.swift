@@ -9,25 +9,34 @@
 import Foundation
 import SwiftyDropbox
 
-class ServicesWebAPI {
+
+class ServicesWebAPI: ServicesWebAPIProtocol {
+    
     let client = DropboxClientsManager.authorizedClient!
-    typealias FolderResult = SwiftyDropbox.Files.ListFolderResult
+    
+    // MARK: - API
     
     func documentList(withPath path: String?,
                       completion: @escaping(FolderResult)->Void) {
         
-        var selectedPath = ""
-        if let path = path {
-            selectedPath = "/\(path)"
-        }
-        
-        client.files.listFolder(path: selectedPath)
+        client.files.listFolder(path: configure(path: path))
             .response(queue: DispatchQueue(label: "documentListQueue")) {
-                
             response, error in
             if let result = response {
                 completion(result)
             }
         }
     }
+    
+    // MARK: - Helpers
+    
+    private func configure(path: String?) -> String {
+           var selectedPath = ""
+           if let path = path {
+               selectedPath = "/\(path)"
+           }
+           
+           return selectedPath
+       }
+    
 }

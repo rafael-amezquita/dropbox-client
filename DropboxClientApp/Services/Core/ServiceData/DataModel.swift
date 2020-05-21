@@ -11,6 +11,7 @@ import Foundation
 enum DocumentType {
     case folder
     case file
+    case unknown
 }
 
 struct Document {
