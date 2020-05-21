@@ -8,17 +8,13 @@
 
 import Foundation
 
-/*
- {
-     ".tag" = folder;
-     id = "id:sLaesr-SzWAAAAAAAAAAEg";
-     name = "folder-a";
-     "path_display" = "/folder-a";
-     "path_lower" = "/folder-a";
- }
- */
-// id and tag are not accesible
-struct Document: Codable {
+enum DocumentType {
+    case folder
+    case file
+}
+
+struct Document {
+    var type: DocumentType
     var name: String
     var path: String
 }

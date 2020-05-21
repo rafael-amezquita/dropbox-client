@@ -12,19 +12,23 @@ import SwiftyDropbox
 class DocumentsAdapter {
     
     private let api = ServicesWebAPI()
+    typealias Metadata = SwiftyDropbox.Files.Metadata
     
-    func fetchDocuments(_ completion: @escaping ([Document]?)->Void)  {
-        api.documentList { response in
+    func fetchDocuments(withPath path: String?,
+                        completion: @escaping ([Document]?)->Void)  {
+        api.documentList(withPath: path) { response in
             //guard let response = response else { return }
             let documents = self.metadataToDocuments(response.entries)
             completion(documents)
         }
     }
     
-    private func metadataToDocuments(_ metadata: [SwiftyDropbox.Files.Metadata]) -> [Document] {
+    private func metadataToDocuments(_ metadata: [Metadata]) -> [Document] {
         var documents = [Document]()
         for element in metadata {
-            let document = Document(name: element.name, path: element.pathDisplay ?? "")
+            let document = Document(type: .folder,
+                                    name: element.name,
+                                    path: element.pathDisplay ?? "")
             documents.append(document)
         }
         
