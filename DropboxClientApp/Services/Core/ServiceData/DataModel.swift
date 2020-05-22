@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum DocumentType {
     case folder
@@ -17,5 +18,6 @@ enum DocumentType {
 struct Document {
     var type: DocumentType
     var name: String
-    var path: String
+    var path: String?
+    var thumb: UIImage?
 }

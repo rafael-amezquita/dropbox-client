@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class DocumentsAdapter {
     
@@ -23,16 +24,30 @@ class DocumentsAdapter {
         }
     }
     
+    func getThumbnail(from path: String,
+                      completion: @escaping (UIImage?)->Void) {
+        api.documentThumbnail(withPath: path) { completion($0) }
+    }
+    
     // MARK: - Mapping
     
     private func metadataToDocuments(_ metadata: [Metadata]) -> [Document] {
         var documents = [Document]()
         for element in metadata {
-        
             let type = mapDocumentType(from: element)
-            let document = Document(type: type,
+            var document = Document(type: type,
                                     name: element.name,
-                                    path: element.pathDisplay ?? "")
+                                    path: element.pathDisplay)
+            
+//            if document.type == .file {
+//                api.documentThumbnail(withPath: element.pathDisplay!) {
+//                    image in
+//                    
+//                    DispatchQueue.main.async {
+//                        document.thumb = image
+//                    }
+//                }
+//            }
             documents.append(document)
         }
         
@@ -43,15 +58,12 @@ class DocumentsAdapter {
         var documentType: DocumentType = .folder
         // TODO: getThumbnail and update the model with that info
         switch element {
-            case let fileMetadata as FileMetadata:
+            case _ as FileMetadata:
                 documentType = .file
-                print(fileMetadata)
-            case let folderMetadata as FolderMetadata:
+            case _ as FolderMetadata:
                 documentType = .folder
-                print(folderMetadata)
             default:
                 documentType = .unknown
-                print(element)
         }
         
         return documentType

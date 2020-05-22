@@ -28,6 +28,27 @@ class ServicesWebAPI: ServicesWebAPIProtocol {
         }
     }
     
+    func documentThumbnail(withPath path: String,
+                           completion: @escaping(UIImage?)->Void) {
+        client.files.getThumbnail(path: path).response {
+            (metadataResponse, error) in
+            
+            guard let response = metadataResponse else {
+                return
+            }
+
+            let fileData = response.1 as Data
+            let thumb = UIImage(data: fileData)
+            //folder = won't get a thumbnail
+            //txt = unsuported extension
+            //TODO: Error handling
+            completion(thumb)
+        }
+        
+        
+            
+    }
+    
     // MARK: - Helpers
     
     private func configure(path: String?) -> String {

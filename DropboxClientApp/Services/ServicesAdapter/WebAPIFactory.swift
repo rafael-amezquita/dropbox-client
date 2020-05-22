@@ -17,6 +17,9 @@ typealias FolderMetadata = Files.FolderMetadata
 protocol ServicesWebAPIProtocol {
     func documentList(withPath path: String?,
                       completion: @escaping(FolderResult)->Void)
+    
+    func documentThumbnail(withPath path: String,
+                      completion: @escaping(UIImage?)->Void)
 }
 
 class WebAPIFactory {
