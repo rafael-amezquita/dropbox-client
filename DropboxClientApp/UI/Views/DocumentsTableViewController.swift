@@ -15,21 +15,22 @@ class DocumentsTableViewController: UITableViewController {
     // MARK: - Lifecycle
     
     init(with presenter: DocumentsProtocol) {
-        
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        presenter.fetchDocuments(withPath: nil)
-        presenter.fetchDelegate = self
+        
+        presenter.fetchDocuments() {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
 
     // MARK: - Table view data source
@@ -53,17 +54,13 @@ class DocumentsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
-        
-        presenter.fetchDocument(at: indexPath.row)
-    }
-}
-
-extension DocumentsTableViewController: FetchDocumentDelegate {
-    
-    func documentsDidFetch() {
-        
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
+        presenter.fetchDocument(at: indexPath.row) {
+            presenter in
+            DispatchQueue.main.async {
+                let documentsTableController = DocumentsTableViewController(with: presenter)
+                self.navigationController?.pushViewController(documentsTableController,
+                                                              animated: true)
+            }
         }
     }
 }

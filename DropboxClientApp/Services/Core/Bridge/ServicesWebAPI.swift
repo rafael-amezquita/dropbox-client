@@ -9,7 +9,6 @@
 import Foundation
 import SwiftyDropbox
 
-
 class ServicesWebAPI: ServicesWebAPIProtocol {
     
     let client = DropboxClientsManager.authorizedClient!
@@ -22,6 +21,7 @@ class ServicesWebAPI: ServicesWebAPIProtocol {
         client.files.listFolder(path: configure(path: path))
             .response(queue: DispatchQueue(label: "documentListQueue")) {
             response, error in
+                
             if let result = response {
                 completion(result)
             }
@@ -39,25 +39,19 @@ class ServicesWebAPI: ServicesWebAPIProtocol {
 
             let fileData = response.1 as Data
             let thumb = UIImage(data: fileData)
-            //folder = won't get a thumbnail
-            //txt = unsuported extension
+            
             //TODO: Error handling
             completion(thumb)
         }
-        
-        
-            
     }
     
     // MARK: - Helpers
-    
     private func configure(path: String?) -> String {
-           var selectedPath = ""
-           if let path = path {
-               selectedPath = "/\(path)"
-           }
-           
-           return selectedPath
-       }
+        var selectedPath = ""
+        if let path = path {
+            selectedPath = "/\(path)"
+        }
+        return selectedPath
+    }
     
 }

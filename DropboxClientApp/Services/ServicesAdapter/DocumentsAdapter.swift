@@ -18,7 +18,6 @@ class DocumentsAdapter {
     func fetchDocuments(withPath path: String?,
                         completion: @escaping ([Document]?)->Void)  {
         api.documentList(withPath: path) { response in
-            //guard let response = response else { return }
             let documents = self.metadataToDocuments(response.entries)
             completion(documents)
         }
@@ -35,19 +34,9 @@ class DocumentsAdapter {
         var documents = [Document]()
         for element in metadata {
             let type = mapDocumentType(from: element)
-            var document = Document(type: type,
+            let document = Document(type: type,
                                     name: element.name,
                                     path: element.pathDisplay)
-            
-//            if document.type == .file {
-//                api.documentThumbnail(withPath: element.pathDisplay!) {
-//                    image in
-//                    
-//                    DispatchQueue.main.async {
-//                        document.thumb = image
-//                    }
-//                }
-//            }
             documents.append(document)
         }
         

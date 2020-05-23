@@ -19,4 +19,14 @@ class NavigationViewController: UINavigationController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        modalPresentationStyle = .overFullScreen
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationBar.topItem?.title = "Dropbox Client"
+    }
 }

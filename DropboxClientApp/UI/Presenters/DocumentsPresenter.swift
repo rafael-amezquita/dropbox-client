@@ -9,27 +9,12 @@
 import Foundation
 import UIKit
 
-protocol FetchDocumentDelegate: class {
-    
-    func documentsDidFetch()
-}
-
-protocol DocumentsProtocol {
-    
-    var fetchDelegate: FetchDocumentDelegate? { get set }
-    var numberOfItems: Int { get }
-    
-    func fetchDocuments(withPath path: String?)
-    func fetchDocument(at index: Int)
-    func configure(cell: UITableViewCell,
-                   withIndex index: Int)
-}
-
 class DocumentsPresenter {
     
     private var adapter = DocumentsAdapter()
     private var documents = [Document]()
-    weak var fetchDelegate: FetchDocumentDelegate?
+    private var selectedDocument: Document?
+    
     var numberOfItems: Int {
         return documents.count
     }
@@ -38,7 +23,6 @@ class DocumentsPresenter {
     
     private func getThumbnailIfNeeded(from path: String,
                               completion: @escaping (UIImage)->Void) {
-        
         adapter.getThumbnail(from: path) { (image) in
             guard let image = image else { return }
             completion(image)
@@ -52,23 +36,24 @@ class DocumentsPresenter {
 extension DocumentsPresenter: DocumentsProtocol {
     
     func document(at index: Int) -> Document {
-        
         return documents[index]
     }
     
-    func fetchDocuments(withPath path: String? = nil) {
-        
+    func fetchDocuments(_ completion: @escaping ()->Void) {
+        let path: String? = selectedDocument?.path
         adapter.fetchDocuments(withPath: path) { response in
             guard let response = response else { return }
             self.documents = response
-            self.fetchDelegate?.documentsDidFetch()
+            completion()
         }
     }
     
-    func fetchDocument(at index: Int) {
-        
-        let document = documents[index]
-        fetchDocuments(withPath: document.path)
+    func fetchDocument(at index: Int,
+                       completion: @escaping (DocumentsProtocol)->Void) {
+        selectedDocument = documents[index]
+        fetchDocuments() {
+            completion(self)
+        }
     }
     
     func configure(cell: UITableViewCell,
@@ -86,7 +71,6 @@ extension DocumentsPresenter: DocumentsProtocol {
                     }
                 }
             }
-            
         }
     }
 }

@@ -21,6 +21,7 @@
 		E1B725792474A0B000A6B0A7 /* DocumentsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B725782474A0B000A6B0A7 /* DocumentsAdapter.swift */; };
 		E1B7257B2474A16500A6B0A7 /* DocumentsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B7257A2474A16500A6B0A7 /* DocumentsPresenter.swift */; };
 		E1B7257D2474AD7000A6B0A7 /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B7257C2474AD7000A6B0A7 /* DataModel.swift */; };
+		E1CA041D247890BE0060878C /* DocumentsProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CA041C247890BE0060878C /* DocumentsProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		E1B725782474A0B000A6B0A7 /* DocumentsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsAdapter.swift; sourceTree = "<group>"; };
 		E1B7257A2474A16500A6B0A7 /* DocumentsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsPresenter.swift; sourceTree = "<group>"; };
 		E1B7257C2474AD7000A6B0A7 /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		E1CA041C247890BE0060878C /* DocumentsProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsProtocol.swift; sourceTree = "<group>"; };
 		FA12EED5FA8897ACD0BF2C48 /* Pods-DropboxClientAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropboxClientAppTests.debug.xcconfig"; path = "Target Support Files/Pods-DropboxClientAppTests/Pods-DropboxClientAppTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +103,7 @@
 		E13A41A024760E3A0044574A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E175997524741D5900939FDC /* NavigationViewController.swift */,
 				E175997724741DBF00939FDC /* DocumentsTableViewController.swift */,
 			);
 			path = Views;
@@ -110,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				E1B7257A2474A16500A6B0A7 /* DocumentsPresenter.swift */,
+				E1CA041C247890BE0060878C /* DocumentsProtocol.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -194,7 +198,6 @@
 		E175996E247365FF00939FDC /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				E175997524741D5900939FDC /* NavigationViewController.swift */,
 				E13A41A124760E4B0044574A /* Presenters */,
 				E13A41A024760E3A0044574A /* Views */,
 			);
@@ -379,6 +382,7 @@
 			files = (
 				E175997624741D5900939FDC /* NavigationViewController.swift in Sources */,
 				E175997824741DBF00939FDC /* DocumentsTableViewController.swift in Sources */,
+				E1CA041D247890BE0060878C /* DocumentsProtocol.swift in Sources */,
 				E14037752476C0B800684F08 /* WebAPIFactory.swift in Sources */,
 				E1B7257B2474A16500A6B0A7 /* DocumentsPresenter.swift in Sources */,
 				E175994A24735B2C00939FDC /* MainViewController.swift in Sources */,
