@@ -9,8 +9,7 @@
 import Foundation
 import SwiftyDropbox
 
-typealias FolderResult = SwiftyDropbox.Files.ListFolderResult
-typealias Metadata = SwiftyDropbox.Files.Metadata
+typealias Metadata = Files.Metadata
 typealias FileMetadata = Files.FileMetadata
 typealias FolderMetadata = Files.FolderMetadata
 typealias DownloadError = Files.DownloadError

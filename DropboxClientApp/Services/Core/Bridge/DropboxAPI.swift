@@ -16,7 +16,7 @@ class DropboxAPI: DropboxAPIProtocol {
     // MARK: - API Handling
     
     func documentList(withPath path: String?,
-                      completion: @escaping(FolderResult)->Void) {
+                      completion: @escaping(ListFolderResult)->Void) {
         
         let queue = DispatchQueue(label: "documentListQueue")
         let response: DropboxRCPResponseClosure = {

@@ -11,7 +11,7 @@ import UIKit
 
 protocol DropboxAPIProtocol {
     func documentList(withPath path: String?,
-                      completion: @escaping(FolderResult)->Void)
+                      completion: @escaping(ListFolderResult)->Void)
     
     func documentThumbnail(withPath path: String,
                       completion: @escaping(UIImage?)->Void)
