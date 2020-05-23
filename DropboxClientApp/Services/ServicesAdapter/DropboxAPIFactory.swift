@@ -1,5 +1,5 @@
 //
-//  WebAPIFactory.swift
+//  DropboxAPIFactory.swift
 //  DropboxClientApp
 //
 //  Created by Rafael Amezquita on 21/05/20.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-protocol ServicesWebAPIProtocol {
+protocol DropboxAPIProtocol {
     func documentList(withPath path: String?,
                       completion: @escaping(FolderResult)->Void)
     
@@ -21,7 +21,7 @@ protocol ServicesWebAPIProtocol {
 }
 
 class DropboxAPIFactory {
-    static func serviceAPI() -> ServicesWebAPIProtocol {
+    static func dropboxAPI() -> DropboxAPIProtocol {
         return DropboxAPI()
     }
 }

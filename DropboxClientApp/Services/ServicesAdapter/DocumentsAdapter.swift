@@ -11,7 +11,7 @@ import UIKit
 
 class DocumentsAdapter {
     
-    private let api = WebAPIFactory.serviceAPI()
+    private let api = DropboxAPIFactory.dropboxAPI()
     
     // MARK: - Fetching
     
