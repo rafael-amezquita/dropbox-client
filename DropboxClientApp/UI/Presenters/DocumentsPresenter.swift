@@ -19,7 +19,7 @@ class DocumentsPresenter {
         return documents.count
     }
     
-    // MARK: - Helpers
+    // MARK: - Document Asynchronous Update
     
     private func getThumbnailIfNeeded(from path: String,
                               completion: @escaping (UIImage)->Void) {
@@ -27,6 +27,22 @@ class DocumentsPresenter {
             guard let image = image else { return }
             completion(image)
         }
+    }
+    
+    // MARK: - Configuration
+    
+    private func configureData(from cell: UITableViewCell,
+                               document: Document) {
+        var imageName = "folder"
+        if document.type == .file {
+            imageName = "file"
+        }
+        cell.textLabel?.text = document.name
+        cell.imageView?.image = UIImage(named: imageName)
+        
+        // TODO: show folder if it is a folder, show size
+        // and another useful info if it is a file
+        cell.detailTextLabel?.text = document.path
     }
 
 }
@@ -59,8 +75,7 @@ extension DocumentsPresenter: DocumentsProtocol {
     func configure(cell: UITableViewCell,
                    withIndex index: Int) {
         var document = documents[index]
-        cell.textLabel?.text = document.name
-        cell.imageView?.image = UIImage(named: "testimage")
+        configureData(from: cell, document: document)
         
         if let path = document.path {
             if document.type == .file{

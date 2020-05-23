@@ -20,16 +20,20 @@ class MainViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
         setUp()
-        print("Main")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        // TODO: handle session
+        let navigation = NavigationViewController()
+        present(navigation, animated: true, completion: nil)
+        /*
         if isUserAuthenticated() {
             // TODO: show navigation
         } else {
             callAuthorizationController()
         }
+         */
     }
     
     // MARK: - Configuration
@@ -43,7 +47,7 @@ class MainViewController: UIViewController {
     // MARK: - Autentication handling
     
     private func isUserAuthenticated() -> Bool {
-        return isLogged
+        return DropboxClientsManager.authorizedClient != nil ? false : true
     }
     
     private func callAuthorizationController() {
@@ -63,7 +67,7 @@ extension MainViewController: AuthenticationDelagete {
             let navigation = NavigationViewController()
             present(navigation, animated: true, completion: nil)
         } else {
-            // TODO:
+            // TODO: handle error
         }
     }
 }

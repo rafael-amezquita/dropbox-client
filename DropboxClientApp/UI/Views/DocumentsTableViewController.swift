@@ -26,6 +26,8 @@ class DocumentsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.separatorStyle = .none
+        
         presenter.fetchDocuments() {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -42,7 +44,7 @@ class DocumentsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView,
                             cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .default,
+        let cell = UITableViewCell(style: .subtitle,
                                    reuseIdentifier: "DocumentCell")
 
         presenter.configure(cell: cell,
@@ -62,5 +64,10 @@ class DocumentsTableViewController: UITableViewController {
                                                               animated: true)
             }
         }
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
     }
 }

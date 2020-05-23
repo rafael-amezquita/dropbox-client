@@ -103,6 +103,7 @@
 		E13A41A024760E3A0044574A /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E175994924735B2C00939FDC /* MainViewController.swift */,
 				E175997524741D5900939FDC /* NavigationViewController.swift */,
 				E175997724741DBF00939FDC /* DocumentsTableViewController.swift */,
 			);
@@ -178,7 +179,6 @@
 				E175996F2473660A00939FDC /* Services */,
 				E175996E247365FF00939FDC /* UI */,
 				E175994524735B2C00939FDC /* AppDelegate.swift */,
-				E175994924735B2C00939FDC /* MainViewController.swift */,
 				E175994E24735B2E00939FDC /* Assets.xcassets */,
 				E175995024735B2E00939FDC /* LaunchScreen.storyboard */,
 				E175995324735B2E00939FDC /* Info.plist */,
