@@ -62,19 +62,11 @@ class DocumentsTableViewController: UITableViewController {
             docuentsPresenter, detailsPresenter in
             
             if let presenter = docuentsPresenter {
-                DispatchQueue.main.async {
-                    let documentsTableController = DocumentsTableViewController(with: presenter)
-                    self.navigationController?.pushViewController(documentsTableController,
-                                                                  animated: true)
-                }
+                self.presentDocumentList(from: presenter)
             }
             
             if let presenter = detailsPresenter {
-                DispatchQueue.main.async {
-                   let detailsController = DetailsViewController(from: presenter)
-                   self.navigationController?.pushViewController(detailsController,
-                                                                 animated: true)
-                }
+                self.presentDocumentDetails(from: presenter)
             }
             
         }
@@ -83,5 +75,23 @@ class DocumentsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    // MARK: - Navigation Handling
+    
+    private func presentDocumentList(from presenter: DocumentsProtocol) {
+        DispatchQueue.main.async {
+            let documentsTableController = DocumentsTableViewController(with: presenter)
+            self.navigationController?.pushViewController(documentsTableController,
+                                                          animated: true)
+        }
+    }
+    
+    private func presentDocumentDetails(from presenter: DetailsProtocol) {
+        DispatchQueue.main.async {
+           let detailsController = DetailsViewController(from: presenter)
+           self.navigationController?.pushViewController(detailsController,
+                                                         animated: true)
+        }
     }
 }
