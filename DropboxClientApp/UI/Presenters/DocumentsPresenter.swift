@@ -65,10 +65,27 @@ extension DocumentsPresenter: DocumentsProtocol {
     }
     
     func fetchDocument(at index: Int,
-                       completion: @escaping (DocumentsProtocol)->Void) {
+                       completion: @escaping (DocumentsProtocol?, DetailsProtocol?)->Void) {
+        // TODO: this isn't working well
+//        guard !documents.isEmpty else {
+//            return
+//        }
         selectedDocument = documents[index]
-        fetchDocuments() {
-            completion(self)
+        if selectedDocument?.type == .folder {
+            fetchDocuments() {
+                completion(self, nil)
+            }
+        } else {
+            if let doc = selectedDocument,
+                let path = doc.path {
+                adapter.getContent(from: path) { url in
+                    guard let url = url else {
+                        return
+                    }
+                    let detailsPresenter = DetailsPresenter(from: url)
+                    completion(nil, detailsPresenter)
+                }
+            }
         }
     }
     

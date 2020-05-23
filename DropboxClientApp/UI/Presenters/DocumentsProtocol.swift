@@ -16,7 +16,7 @@ protocol DocumentsProtocol {
     func fetchDocuments(_ completion: @escaping ()->Void)
     
     func fetchDocument(at index: Int,
-                       completion: @escaping (DocumentsProtocol)->Void)
+                       completion: @escaping (DocumentsProtocol?, DetailsProtocol?)->Void)
     
     func configure(cell: UITableViewCell,
                    withIndex index: Int)

@@ -25,9 +25,23 @@ class DocumentsAdapter {
     
     func getThumbnail(from path: String,
                       completion: @escaping (UIImage?)->Void) {
-        api.documentThumbnail(withPath: path) { completion($0) }
+        api.documentThumbnail(withPath: path) {
+            image in
+            completion(image)
+        }
     }
     
+    func getContent(from path: String,
+                    completion: @escaping (URL?)->Void) {
+        api.documentContent(from: path) { url in
+            guard let url = url else {
+                completion(nil)
+                return
+            }
+            
+            completion(url)
+        }
+    }
     // MARK: - Mapping
     
     private func metadataToDocuments(_ metadata: [Metadata]) -> [Document] {
@@ -45,7 +59,6 @@ class DocumentsAdapter {
     
     private func mapDocumentType(from element: Metadata) -> DocumentType {
         var documentType: DocumentType = .folder
-        // TODO: getThumbnail and update the model with that info
         switch element {
             case _ as FileMetadata:
                 documentType = .file

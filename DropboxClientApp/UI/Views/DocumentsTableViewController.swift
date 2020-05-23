@@ -12,7 +12,7 @@ class DocumentsTableViewController: UITableViewController {
     
     private var presenter: DocumentsProtocol!
     
-    // MARK: - Lifecycle
+    // MARK: - Initialization
     
     init(with presenter: DocumentsProtocol) {
         self.presenter = presenter
@@ -22,6 +22,8 @@ class DocumentsTableViewController: UITableViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +59,24 @@ class DocumentsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         presenter.fetchDocument(at: indexPath.row) {
-            presenter in
-            DispatchQueue.main.async {
-                let documentsTableController = DocumentsTableViewController(with: presenter)
-                self.navigationController?.pushViewController(documentsTableController,
-                                                              animated: true)
+            docuentsPresenter, detailsPresenter in
+            
+            if let presenter = docuentsPresenter {
+                DispatchQueue.main.async {
+                    let documentsTableController = DocumentsTableViewController(with: presenter)
+                    self.navigationController?.pushViewController(documentsTableController,
+                                                                  animated: true)
+                }
             }
+            
+            if let presenter = detailsPresenter {
+                DispatchQueue.main.async {
+                   let detailsController = DetailsViewController(from: presenter)
+                   self.navigationController?.pushViewController(detailsController,
+                                                                 animated: true)
+                }
+            }
+            
         }
     }
     

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		10E12E1E3A108B4DD9C83826 /* Pods_DropboxClientAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8C85AFFFA3D51FE9C199AD5 /* Pods_DropboxClientAppTests.framework */; };
 		448C7162745A00ABEC69C886 /* Pods_DropboxClientApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D798593134FC2DF23938F86D /* Pods_DropboxClientApp.framework */; };
+		E11DB4F924799F0400430664 /* DetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11DB4F824799F0400430664 /* DetailsPresenter.swift */; };
+		E11DB4FB24799F2E00430664 /* DetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11DB4FA24799F2E00430664 /* DetailsViewController.swift */; };
+		E11DB4FE2479E00800430664 /* Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11DB4FD2479E00800430664 /* Aliases.swift */; };
 		E14037752476C0B800684F08 /* WebAPIFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E14037742476C0B800684F08 /* WebAPIFactory.swift */; };
 		E175994624735B2C00939FDC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E175994524735B2C00939FDC /* AppDelegate.swift */; };
 		E175994A24735B2C00939FDC /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E175994924735B2C00939FDC /* MainViewController.swift */; };
@@ -40,6 +43,9 @@
 		C5014CF557BFC1CC90E6DE58 /* Pods-DropboxClientApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DropboxClientApp.debug.xcconfig"; path = "Target Support Files/Pods-DropboxClientApp/Pods-DropboxClientApp.debug.xcconfig"; sourceTree = "<group>"; };
 		D798593134FC2DF23938F86D /* Pods_DropboxClientApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropboxClientApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8C85AFFFA3D51FE9C199AD5 /* Pods_DropboxClientAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DropboxClientAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E11DB4F824799F0400430664 /* DetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsPresenter.swift; sourceTree = "<group>"; };
+		E11DB4FA24799F2E00430664 /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
+		E11DB4FD2479E00800430664 /* Aliases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aliases.swift; sourceTree = "<group>"; };
 		E14037742476C0B800684F08 /* WebAPIFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAPIFactory.swift; sourceTree = "<group>"; };
 		E175994224735B2C00939FDC /* DropboxClientApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropboxClientApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E175994524735B2C00939FDC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -106,6 +112,7 @@
 				E175994924735B2C00939FDC /* MainViewController.swift */,
 				E175997524741D5900939FDC /* NavigationViewController.swift */,
 				E175997724741DBF00939FDC /* DocumentsTableViewController.swift */,
+				E11DB4FA24799F2E00430664 /* DetailsViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -115,6 +122,7 @@
 			children = (
 				E1B7257A2474A16500A6B0A7 /* DocumentsPresenter.swift */,
 				E1CA041C247890BE0060878C /* DocumentsProtocol.swift */,
+				E11DB4F824799F0400430664 /* DetailsPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
@@ -130,6 +138,7 @@
 		E14037772476C1D700684F08 /* Bridge */ = {
 			isa = PBXGroup;
 			children = (
+				E11DB4FD2479E00800430664 /* Aliases.swift */,
 				E1B725762474949200A6B0A7 /* ServicesWebAPI.swift */,
 			);
 			path = Bridge;
@@ -383,13 +392,16 @@
 				E175997624741D5900939FDC /* NavigationViewController.swift in Sources */,
 				E175997824741DBF00939FDC /* DocumentsTableViewController.swift in Sources */,
 				E1CA041D247890BE0060878C /* DocumentsProtocol.swift in Sources */,
+				E11DB4FE2479E00800430664 /* Aliases.swift in Sources */,
 				E14037752476C0B800684F08 /* WebAPIFactory.swift in Sources */,
 				E1B7257B2474A16500A6B0A7 /* DocumentsPresenter.swift in Sources */,
+				E11DB4F924799F0400430664 /* DetailsPresenter.swift in Sources */,
 				E175994A24735B2C00939FDC /* MainViewController.swift in Sources */,
 				E175994624735B2C00939FDC /* AppDelegate.swift in Sources */,
 				E1B7257D2474AD7000A6B0A7 /* DataModel.swift in Sources */,
 				E1B725792474A0B000A6B0A7 /* DocumentsAdapter.swift in Sources */,
 				E1B725772474949200A6B0A7 /* ServicesWebAPI.swift in Sources */,
+				E11DB4FB24799F2E00430664 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

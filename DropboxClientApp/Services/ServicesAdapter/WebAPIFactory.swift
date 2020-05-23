@@ -7,12 +7,7 @@
 //
 
 import Foundation
-import SwiftyDropbox
-
-typealias FolderResult = SwiftyDropbox.Files.ListFolderResult
-typealias Metadata = SwiftyDropbox.Files.Metadata
-typealias FileMetadata = Files.FileMetadata
-typealias FolderMetadata = Files.FolderMetadata
+import UIKit
 
 protocol ServicesWebAPIProtocol {
     func documentList(withPath path: String?,
@@ -20,6 +15,9 @@ protocol ServicesWebAPIProtocol {
     
     func documentThumbnail(withPath path: String,
                       completion: @escaping(UIImage?)->Void)
+    
+    func documentContent(from path: String,
+                         completion: @escaping(URL?)->Void) 
 }
 
 class WebAPIFactory {
