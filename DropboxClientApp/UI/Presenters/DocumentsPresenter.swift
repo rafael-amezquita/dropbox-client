@@ -14,11 +14,15 @@ class DocumentsPresenter {
     private var adapter = DocumentsAdapter()
     private var documents = [Document]()
     private var selectedDocument: Document?
+    private var navigationHistory = [String]()
     
     var numberOfItems: Int {
         return documents.count
     }
     
+    init() {
+        navigationHistory.append("")
+    }
     // MARK: - Document Asynchronous Update
     
     private func getThumbnailIfNeeded(from path: String,
@@ -56,8 +60,7 @@ extension DocumentsPresenter: DocumentsProtocol {
     }
     
     func fetchDocuments(_ completion: @escaping ()->Void) {
-        let path: String? = selectedDocument?.path
-        adapter.fetchDocuments(withPath: path) { response in
+        adapter.fetchDocuments(withPath: navigationHistory.last) { response in
             guard let response = response else { return }
             self.documents = response
             completion()
@@ -66,12 +69,14 @@ extension DocumentsPresenter: DocumentsProtocol {
     
     func fetchDocument(at index: Int,
                        completion: @escaping (DocumentsProtocol?, DetailsProtocol?)->Void) {
-        // TODO: this isn't working well
-//        guard !documents.isEmpty else {
-//            return
-//        }
         selectedDocument = documents[index]
         if selectedDocument?.type == .folder {
+            
+            if let path = selectedDocument?.path,
+                !navigationHistory.contains(path) {
+                navigationHistory.append(path)
+            }
+            
             fetchDocuments() {
                 completion(self, nil)
             }
@@ -104,5 +109,10 @@ extension DocumentsPresenter: DocumentsProtocol {
                 }
             }
         }
+    }
+    
+    @discardableResult
+    func updateackwardNavigationHistory() -> String? {
+        return navigationHistory.popLast()
     }
 }

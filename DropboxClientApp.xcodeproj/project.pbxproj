@@ -120,8 +120,8 @@
 		E13A41A124760E4B0044574A /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				E1B7257A2474A16500A6B0A7 /* DocumentsPresenter.swift */,
 				E1CA041C247890BE0060878C /* DocumentsProtocol.swift */,
+				E1B7257A2474A16500A6B0A7 /* DocumentsPresenter.swift */,
 				E11DB4F824799F0400430664 /* DetailsPresenter.swift */,
 			);
 			path = Presenters;

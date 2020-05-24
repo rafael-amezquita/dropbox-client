@@ -27,7 +27,7 @@ class DropboxAPI: DropboxAPIProtocol {
             }
         }
         
-        client.files.listFolder(path: configure(path: path))
+        client.files.listFolder(path: path ?? "")
             .response(queue: queue,
                       completionHandler: response)
     }
@@ -83,14 +83,14 @@ class DropboxAPI: DropboxAPIProtocol {
     }
     
     
-    // MARK: - Configuration
-    
-    private func configure(path: String?) -> String {
-        var selectedPath = ""
-        if let path = path {
-            selectedPath = "/\(path)"
-        }
-        return selectedPath
-    }
+//    // MARK: - Configuration
+//    
+//    private func configure(path: String?) -> String {
+//        var selectedPath = ""
+//        if let path = path {
+//            selectedPath = "/\(path)"
+//        }
+//        return selectedPath
+//    }
     
 }

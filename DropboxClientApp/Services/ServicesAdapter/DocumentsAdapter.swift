@@ -17,7 +17,8 @@ class DocumentsAdapter {
     
     func fetchDocuments(withPath path: String?,
                         completion: @escaping ([Document]?)->Void)  {
-        api.documentList(withPath: path) { response in
+        api.documentList(withPath: path) {
+            response in
             let documents = self.metadataToDocuments(response.entries)
             completion(documents)
         }

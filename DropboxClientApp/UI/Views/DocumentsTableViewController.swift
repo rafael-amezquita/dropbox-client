@@ -27,16 +27,17 @@ class DocumentsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.separatorStyle = .none
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         presenter.fetchDocuments() {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
     }
-
+    
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView,
@@ -93,5 +94,13 @@ class DocumentsTableViewController: UITableViewController {
            self.navigationController?.pushViewController(detailsController,
                                                          animated: true)
         }
+    }
+    
+    override func willMove(toParent parent: UIViewController?) {
+        super.willMove(toParent: parent)
+        if parent == nil {
+            presenter.updateackwardNavigationHistory()
+        }
+        
     }
 }
