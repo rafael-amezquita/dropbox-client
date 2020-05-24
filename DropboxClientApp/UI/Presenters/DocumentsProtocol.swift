@@ -16,11 +16,12 @@ protocol DocumentsProtocol {
     @discardableResult
     func updateackwardNavigationHistory() -> String?
     
-    func fetchDocuments(_ completion: @escaping ()->Void)
+    func fetchDocuments(_ completion: @escaping (Bool)->Void)
     
     func fetchDocument(at index: Int,
                        completion: @escaping (DocumentsProtocol?, DetailsProtocol?)->Void)
     
-    func configure(cell: UITableViewCell,
-                   withIndex index: Int)
+    func cellContent(from index:Int,
+                     defaultCompletion: (String?, UIImage?, String?)->Void,
+                     updatedCompletion: @escaping (UIImage?)->Void)
 }

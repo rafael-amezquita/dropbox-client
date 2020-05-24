@@ -9,18 +9,9 @@
 import Foundation
 import UIKit
 
-protocol DropboxAPIProtocol {
-    func documentList(withPath path: String?,
-                      completion: @escaping(ListFolderResult)->Void)
-    
-    func documentThumbnail(withPath path: String,
-                      completion: @escaping(UIImage?)->Void)
-    
-    func documentContent(from path: String,
-                         completion: @escaping(URL?)->Void) 
-}
 
 class DropboxAPIFactory {
+    
     static func dropboxAPI() -> DropboxAPIProtocol {
         return DropboxAPI()
     }

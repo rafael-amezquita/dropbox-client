@@ -11,7 +11,7 @@ import UIKit
 
 class DocumentsPresenter {
     
-    private var adapter = DocumentsAdapter()
+    private var adapter: DocumentsAdapterProtocol!
     private var documents = [Document]()
     private var selectedDocument: Document?
     private var navigationHistory = [String]()
@@ -20,33 +20,33 @@ class DocumentsPresenter {
         return documents.count
     }
     
-    init() {
+    init(withAdapter adapter: DocumentsAdapterProtocol = DocumentsAdapter()) {
+        self.adapter = adapter
         navigationHistory.append("")
     }
+    
     // MARK: - Document Asynchronous Update
     
     private func getThumbnailIfNeeded(from path: String,
                               completion: @escaping (UIImage)->Void) {
-        adapter.getThumbnail(from: path) { (image) in
-            guard let image = image else { return }
+        adapter.getThumbnail(from: path) {
+            image in
+            guard let image = image else {
+                return
+            }
             completion(image)
         }
     }
     
     // MARK: - Configuration
     
-    private func configureData(from cell: UITableViewCell,
-                               document: Document) {
-        var imageName = "folder"
-        if document.type == .file {
-            imageName = "file"
-        }
-        cell.textLabel?.text = document.name
-        cell.imageView?.image = UIImage(named: imageName)
+    private func defaultContent(from document: Document,
+                                defaultCompletion: (String?, UIImage?, String?)->Void) {
+        var doc = document
+        let image = doc.type == .file ? "file" : "folder"
+        doc.thumb = UIImage(named: image)
         
-        // TODO: show folder if it is a folder, show size
-        // and another useful info if it is a file
-        cell.detailTextLabel?.text = document.path
+        defaultCompletion(document.name, doc.thumb , document.path)
     }
 
 }
@@ -59,11 +59,15 @@ extension DocumentsPresenter: DocumentsProtocol {
         return documents[index]
     }
     
-    func fetchDocuments(_ completion: @escaping ()->Void) {
-        adapter.fetchDocuments(withPath: navigationHistory.last) { response in
-            guard let response = response else { return }
+    func fetchDocuments(_ completion: @escaping (Bool)->Void) {
+        adapter.fetchDocuments(from: navigationHistory.last) {
+            response in
+            guard let response = response else {
+                completion(false)
+                return
+            }
             self.documents = response
-            completion()
+            completion(true)
         }
     }
     
@@ -78,6 +82,7 @@ extension DocumentsPresenter: DocumentsProtocol {
             }
             
             fetchDocuments() {
+                _ in 
                 completion(self, nil)
             }
         } else {
@@ -94,18 +99,27 @@ extension DocumentsPresenter: DocumentsProtocol {
         }
     }
     
-    func configure(cell: UITableViewCell,
-                   withIndex index: Int) {
+    func cellContent(from index:Int,
+                     defaultCompletion: (String?, UIImage?, String?)->Void,
+                     updatedCompletion: @escaping ((UIImage?)->Void)) {
         var document = documents[index]
-        configureData(from: cell, document: document)
+        guard let path = document.path else {
+            defaultCompletion(nil, nil, nil)
+            return
+        }
         
-        if let path = document.path {
-            if document.type == .file{
-                getThumbnailIfNeeded(from: path) { (image) in
+        defaultContent(from: document,
+                       defaultCompletion: defaultCompletion)
+        
+        if document.type == .file {
+            DispatchQueue.global(qos: .background).async {
+                self.getThumbnailIfNeeded(from: path) {
+                    image in
                     document.thumb = image
-                    DispatchQueue.main.async {
-                        cell.imageView?.image = document.thumb
-                    }
+                    // TODO: show folder if it is a folder, show size
+                    // and another useful info if it is a file
+                    // - modify what you pass -------------------v----- here
+                    updatedCompletion(document.thumb)
                 }
             }
         }

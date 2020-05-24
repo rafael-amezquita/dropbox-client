@@ -1,47 +1,51 @@
 //
-//  DocumentAdapter.swift
-//  DropboxClientApp
+//  MockAdapter.swift
+//  DropboxClientAppTests
 //
-//  Created by Rafael Amezquita on 19/05/20.
+//  Created by Rafael Amezquita on 24/05/20.
 //  Copyright © 2020 Rafael Amezquita. All rights reserved.
 //
 
 import Foundation
 import UIKit
+@testable import DropboxClientApp
 
-class DocumentsAdapter: DocumentsAdapterProtocol {
-    
-    private let api = DropboxAPIFactory.dropboxAPI()
+class MockAdapter: DocumentsAdapterProtocol {
     
     // MARK: - Fetching
+
+    private var entriesResponse = [
+        Metadata(name: "folder-a", pathLower: "/folder-a", pathDisplay: "/folder-a", parentSharedFolderId: nil),
+        Metadata(name: "folder-b", pathLower: "/folder-b", pathDisplay: "/folder-b", parentSharedFolderId: nil),
+        Metadata(name: "folder-c", pathLower: "/folder-c", pathDisplay: "/folder-c", parentSharedFolderId: nil)
+    ]
     
     func fetchDocuments(from path: String?,
                         completion: @escaping ([Document]?)->Void)  {
-        api.documentList(withPath: path) {
-            response in
-            let documents = self.metadataToDocuments(response.entries)
-            completion(documents)
-        }
+        
+        let documents = metadataToDocuments(entriesResponse)
+        completion(documents)
+
     }
     
     func getThumbnail(from path: String,
                       completion: @escaping (UIImage?)->Void) {
-        api.documentThumbnail(withPath: path) {
-            image in
-            completion(image)
-        }
+//        api.documentThumbnail(withPath: path) {
+//            image in
+//            completion(image)
+//        }
     }
     
     func getContent(from path: String,
                     completion: @escaping (URL?)->Void) {
-        api.documentContent(from: path) { url in
-            guard let url = url else {
-                completion(nil)
-                return
-            }
-            
-            completion(url)
-        }
+//        api.documentContent(from: path) { url in
+//            guard let url = url else {
+//                completion(nil)
+//                return
+//            }
+//
+//            completion(url)
+//        }
     }
     // MARK: - Mapping
     
@@ -72,3 +76,4 @@ class DocumentsAdapter: DocumentsAdapterProtocol {
         return documentType
     }
 }
+

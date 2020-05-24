@@ -9,17 +9,6 @@
 import Foundation
 import UIKit
 
-protocol DetailsProtocol {
-    var documentType: DetailsType { get }
-    func documentPath() -> URL?
-}
-
-enum DetailsType {
-    case pdf
-    case image
-    case unknown
-}
-
 class DetailsPresenter: DetailsProtocol {
     
     private let path: URL!
