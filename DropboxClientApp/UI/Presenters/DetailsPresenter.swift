@@ -13,6 +13,13 @@ class DetailsPresenter: DetailsProtocol {
     
     private let path: URL!
     
+    private struct ExtensionConstants {
+        static let jpg = "jpg"
+        static let jpeg = "jpeg"
+        static let png = "png"
+        static let pdf = "pdf"
+    }
+    
     var documentType: DetailsType {
         return detailsType()
     }
@@ -27,11 +34,11 @@ class DetailsPresenter: DetailsProtocol {
     
     private func detailsType() -> DetailsType {
         var type: DetailsType = .unknown
-        if path.absoluteString.contains("pdf") {
+        if path.absoluteString.contains(ExtensionConstants.pdf) {
             type = .pdf
-        } else if path.absoluteString.contains("jpg") ||
-            path.absoluteString.contains("png") ||
-            path.absoluteString.contains("jpeg") {
+        } else if path.absoluteString.contains(ExtensionConstants.jpg) ||
+            path.absoluteString.contains(ExtensionConstants.png) ||
+            path.absoluteString.contains(ExtensionConstants.jpeg) {
             type = .image
         }
         return type

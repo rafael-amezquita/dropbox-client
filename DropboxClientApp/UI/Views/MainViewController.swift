@@ -51,9 +51,12 @@ class MainViewController: UIViewController {
     }
     
     private func callAuthorizationController() {
-        DropboxClientsManager.authorizeFromController(sharedApplication, controller: self, openURL: {
-            (url: URL) -> Void in
-            self.sharedApplication.open(url)
+        DropboxClientsManager.authorizeFromController(sharedApplication,
+            controller: self,
+            openURL: { [weak self]
+            url in
+                
+            self?.sharedApplication.open(url)
         })
     }
 }
@@ -61,6 +64,7 @@ class MainViewController: UIViewController {
 // MARK: - AuthenticationDelagete
 
 extension MainViewController: AuthenticationDelagete {
+    
     func didLoginSuccesfully(_ success: Bool) {
         isLogged = success
         if success {

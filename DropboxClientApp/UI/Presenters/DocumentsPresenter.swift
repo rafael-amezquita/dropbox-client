@@ -60,13 +60,15 @@ extension DocumentsPresenter: DocumentsProtocol {
     }
     
     func fetchDocuments(_ completion: @escaping (Bool)->Void) {
-        adapter.fetchDocuments(from: navigationHistory.last) {
+        adapter.fetchDocuments(from: navigationHistory.last) { [weak self]
             response in
+            
             guard let response = response else {
                 completion(false)
                 return
             }
-            self.documents = response
+            
+            self?.documents = response
             completion(true)
         }
     }
@@ -88,10 +90,13 @@ extension DocumentsPresenter: DocumentsProtocol {
         } else {
             if let doc = selectedDocument,
                 let path = doc.path {
-                adapter.getContent(from: path) { url in
+                adapter.getContent(from: path) {
+                    url in
+                    
                     guard let url = url else {
                         return
                     }
+                    
                     let detailsPresenter = DetailsPresenter(from: url)
                     completion(nil, detailsPresenter)
                 }
@@ -102,23 +107,24 @@ extension DocumentsPresenter: DocumentsProtocol {
     func cellContent(from index:Int,
                      defaultCompletion: (String?, UIImage?, String?)->Void,
                      updatedCompletion: @escaping ((UIImage?)->Void)) {
+        
         var document = documents[index]
         guard let path = document.path else {
             defaultCompletion(nil, nil, nil)
             return
         }
         
+        // TODO: show folder if it is a folder, show size
+        // and another useful info if it is a file
+        // modify what details
         defaultContent(from: document,
                        defaultCompletion: defaultCompletion)
         
         if document.type == .file {
-            DispatchQueue.global(qos: .background).async {
-                self.getThumbnailIfNeeded(from: path) {
+            DispatchQueue.global(qos: .background).async { [weak self] in
+                self?.getThumbnailIfNeeded(from: path) {
                     image in
                     document.thumb = image
-                    // TODO: show folder if it is a folder, show size
-                    // and another useful info if it is a file
-                    // - modify what you pass -------------------v----- here
                     updatedCompletion(document.thumb)
                 }
             }

@@ -17,6 +17,5 @@ enum DetailsType {
 protocol DetailsProtocol {
     
     var documentType: DetailsType { get }
-    
     func documentPath() -> URL?
 }

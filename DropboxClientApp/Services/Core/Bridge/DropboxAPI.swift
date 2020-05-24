@@ -81,16 +81,4 @@ class DropboxAPI: DropboxAPIProtocol {
                               destination: destination)
             .response(completionHandler: response)
     }
-    
-    
-//    // MARK: - Configuration
-//    
-//    private func configure(path: String?) -> String {
-//        var selectedPath = ""
-//        if let path = path {
-//            selectedPath = "/\(path)"
-//        }
-//        return selectedPath
-//    }
-    
 }

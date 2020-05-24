@@ -17,9 +17,9 @@ class DocumentsAdapter: DocumentsAdapterProtocol {
     
     func fetchDocuments(from path: String?,
                         completion: @escaping ([Document]?)->Void)  {
-        api.documentList(withPath: path) {
+        api.documentList(withPath: path) { [weak self]
             response in
-            let documents = self.metadataToDocuments(response.entries)
+            let documents = self?.metadataToDocuments(response.entries)
             completion(documents)
         }
     }
@@ -34,7 +34,9 @@ class DocumentsAdapter: DocumentsAdapterProtocol {
     
     func getContent(from path: String,
                     completion: @escaping (URL?)->Void) {
-        api.documentContent(from: path) { url in
+        api.documentContent(from: path) {
+            url in
+            
             guard let url = url else {
                 completion(nil)
                 return

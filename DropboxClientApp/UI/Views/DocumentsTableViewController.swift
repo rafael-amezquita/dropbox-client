@@ -21,7 +21,6 @@ class DocumentsTableViewController: UITableViewController {
     }
     
     required init?(coder: NSCoder) {
-        
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -35,11 +34,11 @@ class DocumentsTableViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
-        presenter.fetchDocuments() {
+        presenter.fetchDocuments() { [weak self]
             didSuccess in
             
             DispatchQueue.main.async {
-                self.tableView.reloadData()
+                self?.tableView.reloadData()
             }
         }
     }
@@ -82,15 +81,15 @@ class DocumentsTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
         
-        presenter.fetchDocument(at: indexPath.row) {
+        presenter.fetchDocument(at: indexPath.row) { [weak self]
             documentsPresenter, detailsPresenter in
             
             if let presenter = documentsPresenter {
-                self.presentDocumentList(from: presenter)
+                self?.presentDocumentList(from: presenter)
             }
             
             if let presenter = detailsPresenter {
-                self.presentDocumentDetails(from: presenter)
+                self?.presentDocumentDetails(from: presenter)
             }
             
         }
@@ -106,20 +105,20 @@ class DocumentsTableViewController: UITableViewController {
     
     private func presentDocumentList(from presenter: DocumentsProtocol) {
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
             let documentsTableController = DocumentsTableViewController(with: presenter)
             
-            self.navigationController?.pushViewController(documentsTableController,
+            self?.navigationController?.pushViewController(documentsTableController,
                                                           animated: true)
         }
     }
     
     private func presentDocumentDetails(from presenter: DetailsProtocol) {
         
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
            let detailsController = DetailsViewController(from: presenter)
             
-           self.navigationController?.pushViewController(detailsController,
+           self?.navigationController?.pushViewController(detailsController,
                                                          animated: true)
         }
     }
