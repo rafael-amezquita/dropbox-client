@@ -96,7 +96,11 @@ class DocumentsTableViewController: UITableViewController {
             documentsPresenter, detailsPresenter in
             
             if let presenter = documentsPresenter {
-                self?.presentDocumentList(from: presenter)
+                if presenter.numberOfItems == 0 {
+                    self?.emtptyFolderAlert()
+                } else {
+                    self?.presentDocumentList(from: presenter)
+                }
             }
             
             if let presenter = detailsPresenter {
@@ -141,6 +145,22 @@ class DocumentsTableViewController: UITableViewController {
             presenter.updateackwardNavigationHistory()
         }
         
+    }
+    
+    private func emtptyFolderAlert() {
+        DispatchQueue.main.async { [weak self] in
+            let emptyAlert = UIAlertController(title: "Sorry",
+                                               message: "This folder has no documents",
+                                               preferredStyle: .alert)
+            
+            emptyAlert.addAction(UIAlertAction(title: "OK",
+                                               style: .default,
+                                               handler: nil))
+            
+            self?.present(emptyAlert,
+                          animated: true,
+                          completion: nil)
+        }
     }
     
     // MARK: - configuration
