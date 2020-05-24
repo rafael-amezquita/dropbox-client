@@ -13,6 +13,7 @@ class DetailsViewController: UIViewController {
     
     private let presenter: DetailsProtocol!
     private let pdfView = PDFView()
+    private let imageView = UIImageView()
     
     // MARK: - Initialization
     
@@ -30,29 +31,53 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
             
-        view.addSubview(pdfView)
-        configureConstraints()
+        switch presenter.documentType {
+        case .pdf:
+            view.addSubview(pdfView)
+            configureConstraints(from: pdfView)
+        case .image:
+            view.addSubview(imageView)
+            configureConstraints(from: imageView)
+            break
+        case .unknown:
+            // TODO: handle error message
+            break
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if let url = presenter.documentPath(),
-            let document = PDFDocument(url: url) {
+        guard let url = presenter.documentPath() else {
+            return
+        }
+        switch presenter.documentType {
+        case .pdf:
+            let document = PDFDocument(url: url)
             pdfView.autoScales = true
             pdfView.document = document
+        case .image:
+            imageView.image = UIImage(contentsOfFile: url.path)
+            imageView.contentMode = .scaleAspectFit
+            break
+        case .unknown:
+            // TODO: handle error message
+            break
         }
+        
+        
     }
     
     // MARK: - Consfiguration
     
-    private func configureConstraints() {
-        pdfView.translatesAutoresizingMaskIntoConstraints = false
+    private func configureConstraints(from child: UIView) {
+        child.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            pdfView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            pdfView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            pdfView.topAnchor.constraint(equalTo: view.topAnchor),
-            pdfView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            child.leftAnchor.constraint(equalTo: view.leftAnchor),
+            child.rightAnchor.constraint(equalTo: view.rightAnchor),
+            child.topAnchor.constraint(equalTo: view.topAnchor),
+            child.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
 }

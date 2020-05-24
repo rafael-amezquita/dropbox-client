@@ -53,10 +53,15 @@ class DropboxAPI: DropboxAPIProtocol {
     
     func documentContent(from path: String,
                          completion: @escaping(URL?)->Void) {
+        guard let documentName = path.split(separator: "/").last else {
+            completion(nil)
+            return
+        }
+        
         // Download to URL
         let fileManager = FileManager.default
         let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let destURL = directoryURL.appendingPathComponent("temp.pdf")
+        let destURL = directoryURL.appendingPathComponent("\(documentName)")
         
         let destination: DestinationResponseClosure = {
             _,_ in 
