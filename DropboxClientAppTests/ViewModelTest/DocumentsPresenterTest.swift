@@ -9,7 +9,7 @@
 import XCTest
 @testable import DropboxClientApp
 
-class DocumentsPresenterTest: XCTestCase {
+class DocumentsViewModelTest: XCTestCase {
     
     var presenter: DocumentsProtocol!
     

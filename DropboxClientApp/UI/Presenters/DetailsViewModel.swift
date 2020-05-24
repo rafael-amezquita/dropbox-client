@@ -1,5 +1,5 @@
 //
-//  DetailsPresenter.swift
+//  DetailsViewModel.swift
 //  DropboxClientApp
 //
 //  Created by Rafael Amezquita on 23/05/20.

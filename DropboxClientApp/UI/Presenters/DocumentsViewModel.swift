@@ -1,5 +1,5 @@
 //
-//  DocumentsPresenter.swift
+//  DocumentsViewModel.swift
 //  DropboxClientApp
 //
 //  Created by Rafael Amezquita on 19/05/20.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DocumentsPresenter {
+class DocumentsViewModel {
     
     private var adapter: DocumentsAdapterProtocol!
     private var documents = [Document]()
@@ -53,7 +53,7 @@ class DocumentsPresenter {
 
 // MARK: - DocumentsProtocol
 
-extension DocumentsPresenter: DocumentsProtocol {
+extension DocumentsViewModel: DocumentsProtocol {
     
     func document(at index: Int) -> Document {
         return documents[index]
@@ -97,7 +97,7 @@ extension DocumentsPresenter: DocumentsProtocol {
                         return
                     }
                     
-                    let detailsPresenter = DetailsPresenter(from: url)
+                    let detailsPresenter = DetailsViewModel(from: url)
                     completion(nil, detailsPresenter)
                 }
             }

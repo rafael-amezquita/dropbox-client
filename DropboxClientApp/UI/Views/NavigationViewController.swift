@@ -13,7 +13,7 @@ class NavigationViewController: UINavigationController {
     // MARK: - Initialization
     
     init() {
-        let presenter = DocumentsPresenter()
+        let presenter = DocumentsViewModel()
         let documentsTableController = DocumentsTableViewController(with: presenter)
         super.init(rootViewController: documentsTableController)
     }
