@@ -11,16 +11,19 @@ import UIKit
 class DocumentsTableViewController: UITableViewController {
     
     private var presenter: DocumentsProtocol!
+    private var loader: UIActivityIndicatorView!
     
     // MARK: - Initialization
     
     init(with presenter: DocumentsProtocol) {
         
         self.presenter = presenter
+        loader = UIActivityIndicatorView(style: .gray)
         super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder: NSCoder) {
+    
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -30,6 +33,12 @@ class DocumentsTableViewController: UITableViewController {
         super.viewDidLoad()
         
         tableView.separatorStyle = .none
+        
+        loader.hidesWhenStopped = true
+        view.addSubview(loader)
+        
+        startLoader()
+        configureLoaderConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,19 +66,20 @@ class DocumentsTableViewController: UITableViewController {
         let cell = UITableViewCell(style: .subtitle,
                                    reuseIdentifier: "DocumentCell")
 
-        presenter.cellContent(from: indexPath.row, defaultCompletion: {
+        presenter.cellContent(from: indexPath.row, defaultCompletion: { [weak self]
             title, thumb, description in
             
             DispatchQueue.main.async {
                 cell.textLabel?.text = title
                 cell.detailTextLabel?.text = description
                 cell.imageView?.image = thumb
+                self?.stopLoader()
             }
             
-        }) {
-            newThumb in
+        }) { [weak self] newThumb in
             DispatchQueue.main.async {
                 cell.imageView?.image = newThumb
+                self?.stopLoader()
             }
         }
         
@@ -80,6 +90,7 @@ class DocumentsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView,
                             didSelectRowAt indexPath: IndexPath) {
+        startLoader()
         
         presenter.fetchDocument(at: indexPath.row) { [weak self]
             documentsPresenter, detailsPresenter in
@@ -107,7 +118,7 @@ class DocumentsTableViewController: UITableViewController {
         
         DispatchQueue.main.async { [weak self] in
             let documentsTableController = DocumentsTableViewController(with: presenter)
-            
+            self?.stopLoader()
             self?.navigationController?.pushViewController(documentsTableController,
                                                           animated: true)
         }
@@ -116,9 +127,9 @@ class DocumentsTableViewController: UITableViewController {
     private func presentDocumentDetails(from presenter: DetailsProtocol) {
         
         DispatchQueue.main.async { [weak self] in
-           let detailsController = DetailsViewController(from: presenter)
-            
-           self?.navigationController?.pushViewController(detailsController,
+            let detailsController = DetailsViewController(from: presenter)
+            self?.stopLoader()
+            self?.navigationController?.pushViewController(detailsController,
                                                          animated: true)
         }
     }
@@ -130,5 +141,25 @@ class DocumentsTableViewController: UITableViewController {
             presenter.updateackwardNavigationHistory()
         }
         
+    }
+    
+    // MARK: - configuration
+    
+    private func startLoader() {
+        loader.startAnimating()
+    }
+    
+    private func stopLoader() {
+        loader.stopAnimating()
+    }
+    
+    private func configureLoaderConstraints() {
+        loader.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            loader.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            loader.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            loader.widthAnchor.constraint(equalToConstant: 100),
+            loader.heightAnchor.constraint(equalToConstant: 100)
+        ])
     }
 }
