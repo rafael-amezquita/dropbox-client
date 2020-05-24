@@ -42,9 +42,7 @@ class DetailsViewController: UIViewController {
         case .image:
             view.addSubview(imageView)
             configureConstraints(from: imageView)
-            break
         case .unknown:
-            // TODO: handle error message
             break
         }
         
@@ -67,14 +65,30 @@ class DetailsViewController: UIViewController {
             configurePDFView(from: url)
         case .image:
             configureImageView(from: url)
-            break
         case .unknown:
-            // TODO: handle error message
-            break
+            documentNotSupportedAlert()
         }
     }
     
-    // MARK: - Consfiguration
+    // MARK: - Support
+    
+    private func documentNotSupportedAlert() {
+        DispatchQueue.main.async { [weak self] in
+            let supportAlert = UIAlertController(title: "Sorry",
+                                               message: "This document type is not supported",
+                                               preferredStyle: .alert)
+            
+            supportAlert.addAction(UIAlertAction(title: "OK",
+                                               style: .default,
+                                               handler: nil))
+            
+            self?.present(supportAlert,
+                          animated: true,
+                          completion: nil)
+        }
+    }
+    
+    // MARK: - Configuration
     
     private func configurePDFView(from url: URL) {
         DispatchQueue.global(qos: .background).async { [weak self] in
