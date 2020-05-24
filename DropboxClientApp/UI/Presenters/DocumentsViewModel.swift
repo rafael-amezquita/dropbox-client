@@ -73,6 +73,9 @@ extension DocumentsViewModel: DocumentsProtocol {
             }
             
             self?.documents = response
+            if self?.documents.count == 0 {
+                self?.updateBackwardNavigationHistory()
+            }
             completion(true)
         }
     }
@@ -133,7 +136,7 @@ extension DocumentsViewModel: DocumentsProtocol {
     }
     
     @discardableResult
-    func updateackwardNavigationHistory() -> String? {
+    func updateBackwardNavigationHistory() -> String? {
         return navigationHistory.popLast()
     }
 }

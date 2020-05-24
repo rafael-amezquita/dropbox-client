@@ -142,7 +142,7 @@ class DocumentsTableViewController: UITableViewController {
         super.willMove(toParent: parent)
         
         if parent == nil {
-            presenter.updateackwardNavigationHistory()
+            presenter.updateBackwardNavigationHistory()
         }
         
     }

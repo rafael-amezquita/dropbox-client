@@ -14,7 +14,7 @@ protocol DocumentsProtocol {
     var numberOfItems: Int { get }
     
     @discardableResult
-    func updateackwardNavigationHistory() -> String?
+    func updateBackwardNavigationHistory() -> String?
     
     func fetchDocuments(_ completion: @escaping (Bool)->Void)
     
