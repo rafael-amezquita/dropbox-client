@@ -20,4 +20,10 @@ struct Document {
     var name: String
     var path: String?
     var thumb: UIImage?
+    var size: String?
+    
+    func formarSize(from number: Float) -> String {
+        let kb = number / 1000
+        return "\(kb) KB"
+    }
 }

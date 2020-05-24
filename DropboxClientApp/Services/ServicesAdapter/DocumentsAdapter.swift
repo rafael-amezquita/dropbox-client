@@ -51,9 +51,13 @@ class DocumentsAdapter: DocumentsAdapterProtocol {
         var documents = [Document]()
         for element in metadata {
             let type = mapDocumentType(from: element)
-            let document = Document(type: type,
+            var document = Document(type: type,
                                     name: element.name,
                                     path: element.pathDisplay)
+            if let file = element as? FileMetadata {
+                document.size = document.formarSize(from: Float(file.size))
+            }
+           
             documents.append(document)
         }
         

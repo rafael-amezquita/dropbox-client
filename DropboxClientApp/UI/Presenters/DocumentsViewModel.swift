@@ -46,7 +46,11 @@ class DocumentsViewModel {
         let image = doc.type == .file ? "file" : "folder"
         doc.thumb = UIImage(named: image)
         
-        defaultCompletion(document.name, doc.thumb , document.path)
+        var details = "folder"
+        if let size = document.size {
+            details = size
+        }
+        defaultCompletion(document.name, doc.thumb , details)
     }
 
 }
@@ -114,9 +118,6 @@ extension DocumentsViewModel: DocumentsProtocol {
             return
         }
         
-        // TODO: show folder if it is a folder, show size
-        // and another useful info if it is a file
-        // modify what details
         defaultContent(from: document,
                        defaultCompletion: defaultCompletion)
         
