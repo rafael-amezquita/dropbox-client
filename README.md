@@ -1,6 +1,10 @@
 # Dropbox Client
 
-This is a dropbox client aimed to test the dropbox api with an iOS application
+This is a dropbox client aimed to test the dropbox api with an iOS application    
+
+|<img src="https://github.com/rafael-amezquita/dropbox-client/blob/master/loginScreen.gif" width=300/>|<img src="https://github.com/rafael-amezquita/dropbox-client/blob/master/refreshingThumbs.gif" width=300/>|    
+|<img src="https://github.com/rafael-amezquita/dropbox-client/blob/master/openPDF.gif" width=300/>|<img src="https://github.com/rafael-amezquita/dropbox-client/blob/master/emptyFolder.gif" width=300/>|    
+|<img src="https://github.com/rafael-amezquita/dropbox-client/blob/master/openImage.gif" width=300/>|<img src="https://github.com/rafael-amezquita/dropbox-client/blob/master/unsuportedDoc.gif" width=300/>|    
 
 ## How to run it 
 
