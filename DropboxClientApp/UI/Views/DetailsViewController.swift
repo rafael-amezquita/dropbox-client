@@ -38,6 +38,7 @@ class DetailsViewController: UIViewController {
         switch presenter.documentType {
         case .pdf:
             view.addSubview(pdfView)
+            pdfView.backgroundColor = UIColor.white
             configureConstraints(from: pdfView)
         case .image:
             view.addSubview(imageView)
