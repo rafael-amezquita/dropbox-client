@@ -24,16 +24,14 @@ class MainViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        // TODO: handle session
-        let navigation = NavigationViewController()
-        present(navigation, animated: true, completion: nil)
-        /*
+        
         if isUserAuthenticated() {
             // TODO: show navigation
+            let navigation = NavigationViewController()
+            present(navigation, animated: true, completion: nil)
         } else {
             callAuthorizationController()
         }
-         */
     }
     
     // MARK: - Configuration
@@ -47,7 +45,8 @@ class MainViewController: UIViewController {
     // MARK: - Autentication handling
     
     private func isUserAuthenticated() -> Bool {
-        return DropboxClientsManager.authorizedClient != nil ? false : true
+        // TODO: handle usser session
+        return isLogged
     }
     
     private func callAuthorizationController() {
