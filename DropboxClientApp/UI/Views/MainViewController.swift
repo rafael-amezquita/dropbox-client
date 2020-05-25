@@ -25,12 +25,12 @@ class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        //if isUserAuthenticated() {
+        if isUserAuthenticated() {
             let navigation = NavigationViewController()
             present(navigation, animated: true, completion: nil)
-        //} else {
-          //  callAuthorizationController()
-        //}
+        } else {
+            callAuthorizationController()
+        }
     }
     
     // MARK: - Configuration
