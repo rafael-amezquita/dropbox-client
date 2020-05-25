@@ -10,12 +10,15 @@ import UIKit
 
 class NavigationViewController: UINavigationController {
 
+    private let rootController: UIViewController!
+    
     // MARK: - Initialization
     
     init() {
         let presenter = DocumentsViewModel()
         let documentsTableController = DocumentsTableViewController(with: presenter)
-        super.init(rootViewController: documentsTableController)
+        rootController = documentsTableController
+        super.init(nibName: nil, bundle: nil)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -26,11 +29,13 @@ class NavigationViewController: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        modalPresentationStyle = .overFullScreen
+        setViewControllers([rootController], animated: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        
         navigationBar.topItem?.title = "Dropbox Client"
     }
 }

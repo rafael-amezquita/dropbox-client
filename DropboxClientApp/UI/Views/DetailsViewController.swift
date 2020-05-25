@@ -41,6 +41,7 @@ class DetailsViewController: UIViewController {
             configureConstraints(from: pdfView)
         case .image:
             view.addSubview(imageView)
+            imageView.backgroundColor = UIColor.white
             configureConstraints(from: imageView)
         case .unknown:
             break
